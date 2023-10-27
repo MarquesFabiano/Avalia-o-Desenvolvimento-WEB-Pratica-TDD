@@ -58,8 +58,8 @@ class CadastroGetTest(TestCase):
             ('<html', 1),
             ('<body>', 1),
             ('Biblioteca', 2),
-            ('<input', 5),
-            ('<br>', 5),
+            ('<input', 6),
+            ('<br>', 6),
             ('</body>', 1),
             ('</html>', 1),
         )
@@ -71,7 +71,8 @@ class CadastroGetTest(TestCase):
 class CadastroPostOk(TestCase):
     def setUp(self):
         data = {'titulo': 'Contos de Machado de Assis',
-                'editora': 'editora Brasil',}
+                'editora': 'editora Brasil',
+                'autor': 'Machado de Assis'}
         self.resp = self.client.post(r('core:cadastro'), data, follow=True)
         self.resp2 = self.client.post(r('core:cadastro'), data)
 
@@ -102,17 +103,18 @@ class CadastroPostOk(TestCase):
 
 class CadastroPostFail(TestCase):
     def setUp(self):
-        data = {'titulo': 'Livro sem editora',}
-        self.resp = self.client.post(r('core:cadastro'), data)
+        data = {'titulo': 'Livro sem editora'}
+        self.resp = self.client.post(r('core:cadastro'), data, follow=True)
 
     def test_template_used(self):
         self.assertTemplateUsed(self.resp, 'cadastro.html')
 
     def test_status_code(self):
-        self.assertEqual(self.resp.status_code , HTTPStatus.OK)
+        self.assertEqual(self.resp.status_code, HTTPStatus.OK)
 
     def test_dados_persistidos(self):
         self.assertFalse(LivroModel.objects.exists())
+
 
 
 class ListarGet_withoutBook_Test(TestCase):
@@ -220,7 +222,7 @@ class ListarPost_OneBook_Test(TestCase):
             ('Biblioteca', 2),
             ('<input', 1),
             ('Contos de Machado de Assis', 1),
-            ('<br>', 6),
+            ('<br>', 8),
             ('</body>', 1),
             ('</html>', 1),
         )
@@ -233,7 +235,8 @@ class LivroModelModelTest(TestCase):
     def setUp(self):
         self.livro = LivroModel(
             titulo='Contos de Machado de Assis',
-            editora='editora Brasil',)
+            editora='editora Brasil',
+            autor = 'Machamdo de Assis')
         self.livro.save()
 
     def test_created(self):
@@ -243,11 +246,11 @@ class LivroModelModelTest(TestCase):
 class LivroFormTest(TestCase):
     def test_fields_in_form(self):
         form = LivroForm()
-        expected = ['titulo', 'editora']
+        expected = ['titulo', 'editora','autor']
         self.assertSequenceEqual(expected, list(form.fields))
     
     def test_form_all_OK(self):
-        dados = dict(titulo='Contos do Machado de Assis', editora='Editora Brasil')
+        dados = dict(titulo='Contos do Machado de Assis', editora='Editora Brasil', autor = 'Machado de Assis')
         form = LivroForm(dados)
         errors = form.errors
         self.assertEqual({}, errors)
