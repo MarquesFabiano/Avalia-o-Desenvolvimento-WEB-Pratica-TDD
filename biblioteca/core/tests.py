@@ -250,40 +250,38 @@ class LivroFormTest(TestCase):
         self.assertSequenceEqual(expected, list(form.fields))
     
     def test_form_all_OK(self):
-        dados = dict(titulo='Contos do Machado de Assis', editora='Editora Brasil', autor = 'Machado de Assis')
+        dados = dict(titulo='Contos do Machado de Assis', editora='Editora Brasil', autor='Machado de Assis')
         form = LivroForm(dados)
         errors = form.errors
         self.assertEqual({}, errors)
-        
-    def test_form_without_data_1(self):
-        dados = dict(titulo='Contos do Machado de Assis')
-        form = LivroForm(dados)
-        errors = form.errors
-        errors_list = errors['editora']
-        msg = 'Informe a editora do livro.'
-        self.assertEqual([msg], errors_list)
 
-    def test_form_without_data_2(self):
-        dados = dict(editora='Editora Brasil')
-        form = LivroForm(dados)
-        errors = form.errors
-        errors_list = errors['titulo']
-        msg = 'Informe o título do livro.'
-        self.assertEqual([msg], errors_list)
+        
+    def test_form_missing_required_fields(self):
+        data = {
+            'titulo': '',
+            'editora': '',
+            'autor': '',  
+        }
+        form = LivroForm(data)
+        self.assertFalse(form.is_valid())
+        self.assertEqual(form.errors['titulo'], ["Informe o título do livro."])
+        self.assertEqual(form.errors['editora'], ["Informe a editora do livro."])
+        self.assertEqual(form.errors['autor'], ["Informe o autor do livro."])
+
     
-    def test_form_less_than_10_character_1(self):
-        dados = dict(titulo='123', editora='Editora Brasil')
-        form = LivroForm(dados)
-        errors = form.errors
-        errors_list = errors['titulo']
-        msg = 'Deve ter pelo menos dez caracteres'
-        self.assertEqual([msg], errors_list)
-    
-    def test_form_less_than_10_character_2(self):
-        dados = dict(titulo='Contos do Machado de Assis', editora='123')
-        form = LivroForm(dados)
-        errors = form.errors
-        errors_list = errors['editora']
-        msg = 'Deve ter pelo menos dez caracteres'
-        self.assertEqual([msg], errors_list)
+def test_form_min_character_length(self):
+    test_cases = [
+        {'titulo': '123', 'editora': 'Editora Brasil', 'campo': 'titulo'},
+        {'titulo': 'Contos do Machado de Assis', 'editora': '123', 'campo': 'editora'},
+        {'titulo': 'Contos do Machado de Assis', 'editora': 'Editora', 'autor': 'Machado', 'campo': 'autor'}
+    ]
+
+    for data in test_cases:
+        form = LivroForm(data)
+        field_name = data['campo'] #recebe o campo que deve ser analisado se está com menos de 10 caracteres  
+        with self.subTest(field_name=field_name):
+            self.assertIn(field_name, form.errors)
+            self.assertEqual(
+                form.errors[field_name], ['Deve ter pelo menos dez caracteres']
+            )
 
