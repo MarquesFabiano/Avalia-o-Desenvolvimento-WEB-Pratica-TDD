@@ -7,12 +7,18 @@ def validate_title(value):
     if len(value) < 10:
         raise ValidationError('Deve ter pelo menos dez caracteres')
 
+def validate_ano(ano):
+    if not ano.isdigit():
+        raise ValidationError('O ano deve conter apenas dígitos.')
+
+    if len(ano) != 4:
+        raise ValidationError('O ano deve ter exatamente 4 dígitos.')
 
 class LivroForm(forms.ModelForm):
 
     class Meta:
         model = LivroModel
-        fields = ['titulo', 'editora','autor']
+        fields = ['titulo', 'editora','autor', 'ano']
         error_messages = {
             'titulo': {
                 'required': ("Informe o título do livro."),
@@ -22,6 +28,9 @@ class LivroForm(forms.ModelForm):
             },
             'autor': {
                 'required': ('Informe o autor do livro.')
+            },
+            'ano': {
+                'required' : ('Informe o ano do livro')
             }
         }
 
@@ -39,6 +48,11 @@ class LivroForm(forms.ModelForm):
         autor =self.cleaned_data['autor']
         validate_title(autor)
         return autor
+    
+    def clean_ano(self):
+        ano =self.cleaned_data['ano']
+        validate_title(ano)
+        return ano    
 
     def clean(self):
         self.cleaned_data = super().clean()
