@@ -8,10 +8,10 @@ def validate_title(value):
         raise ValidationError('Deve ter pelo menos dez caracteres')
 
 def validate_ano(ano):
-    if ano is not None and not str(ano).isdigit():
+    if not ano.isdigit():
         raise ValidationError('O ano deve conter apenas dígitos.')
 
-    if ano is not None and len(str(ano)) != 4:
+    if len(ano) != 4:
         raise ValidationError('O ano deve ter exatamente 4 dígitos.')
     
 def validate_isbn(isbn):
@@ -19,7 +19,8 @@ def validate_isbn(isbn):
         raise ValidationError('O ISBN deve conter apenas dígitos.')
     
     if len(isbn) != 13:
-        raise ValidationError('O ISBN deve conter 13 dígitos')
+        raise ValidationError('O ISBN deve conter 13 dígitos.')
+
 
 
 class LivroForm(forms.ModelForm):

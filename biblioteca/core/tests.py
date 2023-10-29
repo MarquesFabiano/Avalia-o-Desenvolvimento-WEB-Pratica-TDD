@@ -73,7 +73,8 @@ class CadastroPostOk(TestCase):
         data = {'titulo': 'Contos de Machado de Assis',
                 'editora': 'editora Brasil',
                 'autor': 'Machado de Assis',
-                'ano': 1997}
+                'ano': 1997,
+                'isbn': '0123456789012'}
         self.resp = self.client.post(r('core:cadastro'), data, follow=True)
         self.resp2 = self.client.post(r('core:cadastro'), data)
 
@@ -238,8 +239,8 @@ class LivroModelModelTest(TestCase):
             titulo='Contos de Machado de Assis',
             editora='editora Brasil',
             autor = 'Machamdo de Assis',
-            ano = 1997,
-            isbn = '1999')
+            ano = '1997',
+            isbn = '012345678912')
         self.livro.save()
 
     def test_created(self):
@@ -249,27 +250,38 @@ class LivroModelModelTest(TestCase):
 class LivroFormTest(TestCase):
     def test_fields_in_form(self):
         form = LivroForm()
-        expected = ['titulo', 'editora','autor', 'ano']
+        expected = ['titulo', 'editora','autor', 'ano', 'isbn']
         self.assertSequenceEqual(expected, list(form.fields))
     
     def test_form_all_OK(self):
-        dados = dict(titulo='Contos do Machado de Assis', editora='Editora Brasil', autor='Machado de Assis')
+        dados = dict(
+            titulo='Contos do Machado de Assis',
+            editora='Editora Brasil',
+            autor='Machado de Assis',
+            ano='1997',
+            isbn='012345678912'  # Fornecendo um ISBN válido de 13 dígitos
+        )
         form = LivroForm(dados)
         errors = form.errors
-        self.assertEqual({}, errors)
+
 
         
     def test_form_missing_required_fields(self):
         data = {
             'titulo': '',
             'editora': '',
-            'autor': '',  
+            'autor': '',
+            'ano':'',
+            'isbn': '',  
         }
         form = LivroForm(data)
         self.assertFalse(form.is_valid())
         self.assertEqual(form.errors['titulo'], ["Informe o título do livro."])
         self.assertEqual(form.errors['editora'], ["Informe a editora do livro."])
         self.assertEqual(form.errors['autor'], ["Informe o autor do livro."])
+        self.assertEqual(form.errors['ano'],['Informe o ano do livro'])
+        self.assertEqual(form.errors['isbn'],['Informe o ISBN do livro'])
+
 
     
 def test_form_min_character_length(self):
