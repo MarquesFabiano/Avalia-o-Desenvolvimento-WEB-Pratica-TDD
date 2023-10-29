@@ -5,6 +5,7 @@ class LivroModel(models.Model):
     editora = models.CharField('editora', max_length=200)
     autor = models.CharField('Autor', max_length=200)
     ano = models.IntegerField('Ano de Publicação', null=True, blank=True)
+    isbn = models.CharField('ISBN do livro', max_length=13) 
 
 
     def __str__(self):
