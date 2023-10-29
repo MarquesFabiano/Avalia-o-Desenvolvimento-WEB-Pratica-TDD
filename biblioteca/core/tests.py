@@ -58,8 +58,8 @@ class CadastroGetTest(TestCase):
             ('<html', 1),
             ('<body>', 1),
             ('Biblioteca', 2),
-            ('<input', 6),
-            ('<br>', 6),
+            ('<input', 7),
+            ('<br>', 7),
             ('</body>', 1),
             ('</html>', 1),
         )
@@ -72,7 +72,8 @@ class CadastroPostOk(TestCase):
     def setUp(self):
         data = {'titulo': 'Contos de Machado de Assis',
                 'editora': 'editora Brasil',
-                'autor': 'Machado de Assis'}
+                'autor': 'Machado de Assis',
+                'ano': 1997}
         self.resp = self.client.post(r('core:cadastro'), data, follow=True)
         self.resp2 = self.client.post(r('core:cadastro'), data)
 
@@ -222,7 +223,7 @@ class ListarPost_OneBook_Test(TestCase):
             ('Biblioteca', 2),
             ('<input', 1),
             ('Contos de Machado de Assis', 1),
-            ('<br>', 8),
+            ('<br>', 10),
             ('</body>', 1),
             ('</html>', 1),
         )
@@ -236,7 +237,8 @@ class LivroModelModelTest(TestCase):
         self.livro = LivroModel(
             titulo='Contos de Machado de Assis',
             editora='editora Brasil',
-            autor = 'Machamdo de Assis')
+            autor = 'Machamdo de Assis',
+            ano = 1997)
         self.livro.save()
 
     def test_created(self):
@@ -246,7 +248,7 @@ class LivroModelModelTest(TestCase):
 class LivroFormTest(TestCase):
     def test_fields_in_form(self):
         form = LivroForm()
-        expected = ['titulo', 'editora','autor']
+        expected = ['titulo', 'editora','autor', 'ano']
         self.assertSequenceEqual(expected, list(form.fields))
     
     def test_form_all_OK(self):
@@ -278,10 +280,10 @@ def test_form_min_character_length(self):
 
     for data in test_cases:
         form = LivroForm(data)
-        field_name = data['campo'] #recebe o campo que deve ser analisado se está com menos de 10 caracteres  
+        field_name = data['campo']  # Recebe o campo que deve ser analisado se está com menos de 10 caracteres
         with self.subTest(field_name=field_name):
             self.assertIn(field_name, form.errors)
             self.assertEqual(
-                form.errors[field_name], ['Deve ter pelo menos dez caracteres']
+                form.errors[field_name][0], 'Deve ter pelo menos dez caracteres'  # Correção aqui
             )
 

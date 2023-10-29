@@ -8,11 +8,12 @@ def validate_title(value):
         raise ValidationError('Deve ter pelo menos dez caracteres')
 
 def validate_ano(ano):
-    if not ano.isdigit():
+    if ano is not None and not str(ano).isdigit():
         raise ValidationError('O ano deve conter apenas dígitos.')
 
-    if len(ano) != 4:
+    if ano is not None and len(str(ano)) != 4:
         raise ValidationError('O ano deve ter exatamente 4 dígitos.')
+
 
 class LivroForm(forms.ModelForm):
 
@@ -51,7 +52,7 @@ class LivroForm(forms.ModelForm):
     
     def clean_ano(self):
         ano =self.cleaned_data['ano']
-        validate_title(ano)
+        validate_ano(ano)
         return ano    
 
     def clean(self):
