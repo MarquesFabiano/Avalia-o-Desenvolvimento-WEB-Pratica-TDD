@@ -238,7 +238,8 @@ class LivroModelModelTest(TestCase):
             titulo='Contos de Machado de Assis',
             editora='editora Brasil',
             autor = 'Machamdo de Assis',
-            ano = 1997)
+            ano = 1997,
+            isbn = '1999')
         self.livro.save()
 
     def test_created(self):
