@@ -13,13 +13,20 @@ def validate_ano(ano):
 
     if ano is not None and len(str(ano)) != 4:
         raise ValidationError('O ano deve ter exatamente 4 dígitos.')
+    
+def validate_isbn(isbn):
+    if not isbn.isdigit():
+        raise ValidationError('O ISBN deve conter apenas dígitos.')
+    
+    if len(isbn) != 13:
+        raise ValidationError('O ISBN deve conter 13 dígitos')
 
 
 class LivroForm(forms.ModelForm):
 
     class Meta:
         model = LivroModel
-        fields = ['titulo', 'editora','autor', 'ano']
+        fields = ['titulo', 'editora','autor', 'ano', 'isbn']
         error_messages = {
             'titulo': {
                 'required': ("Informe o título do livro."),
@@ -32,6 +39,9 @@ class LivroForm(forms.ModelForm):
             },
             'ano': {
                 'required' : ('Informe o ano do livro')
+            },
+            'isbn': {
+                'required' : ('Informe o ISBN do livro')
             }
         }
 
@@ -53,7 +63,12 @@ class LivroForm(forms.ModelForm):
     def clean_ano(self):
         ano =self.cleaned_data['ano']
         validate_ano(ano)
-        return ano    
+        return ano
+
+    def clean_isbn(self):
+        isbn = self.cleaned_data['isbn']
+        validate_isbn(isbn)
+        return isbn    
 
     def clean(self):
         self.cleaned_data = super().clean()
