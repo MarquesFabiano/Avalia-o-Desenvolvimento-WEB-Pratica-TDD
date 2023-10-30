@@ -240,7 +240,8 @@ class LivroModelModelTest(TestCase):
             editora='editora Brasil',
             autor = 'Machamdo de Assis',
             ano = '1997',
-            isbn = '012345678912')
+            isbn = '012345678912',
+            numDepaginas = '123')
         self.livro.save()
 
     def test_created(self):

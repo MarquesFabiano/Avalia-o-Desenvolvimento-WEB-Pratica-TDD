@@ -6,7 +6,7 @@ class LivroModel(models.Model):
     autor = models.CharField('Autor', max_length=200)
     ano = models.CharField('Ano de Publicação', max_length=4)
     isbn = models.CharField('ISBN do livro', max_length=13) 
-    nunDePaginas = models.CharField('Número de páginas do livro', max_length=3)
+    numDePaginas = models.CharField('Número de páginas do livro', max_length=3)
 
 
     def __str__(self):
