@@ -21,13 +21,18 @@ def validate_isbn(isbn):
     if len(isbn) != 13:
         raise ValidationError('O ISBN deve conter 13 dígitos.')
 
-
+def validate_nunDePaginas(nunDePaginas):
+    if not nunDePaginas.isdigit():
+        raise ValidationError('O número de páginas deve conter apenas dígitos.')
+    
+    if len(nunDePaginas) <=3:
+        raise ValidationError('O número de páginas deve conter até 3 dígitos.')
 
 class LivroForm(forms.ModelForm):
 
     class Meta:
         model = LivroModel
-        fields = ['titulo', 'editora','autor', 'ano', 'isbn']
+        fields = ['titulo', 'editora','autor', 'ano', 'isbn', 'nunDePaginas']
         error_messages = {
             'titulo': {
                 'required': ("Informe o título do livro."),
@@ -43,6 +48,9 @@ class LivroForm(forms.ModelForm):
             },
             'isbn': {
                 'required' : ('Informe o ISBN do livro')
+            },
+            'nunDePaginas': {
+                'required': ('Informe o número de páginas do livro.')
             }
         }
 
@@ -70,6 +78,11 @@ class LivroForm(forms.ModelForm):
         isbn = self.cleaned_data['isbn']
         validate_isbn(isbn)
         return isbn    
+
+    def clean_nunDePaginas(self):
+        nunDePaginas = self.cleaned_data['nunDePaginas']
+        validate_nunDePaginas(nunDePaginas)
+        return nunDePaginas
 
     def clean(self):
         self.cleaned_data = super().clean()
