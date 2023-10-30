@@ -58,8 +58,8 @@ class CadastroGetTest(TestCase):
             ('<html', 1),
             ('<body>', 1),
             ('Biblioteca', 2),
-            ('<input', 7),
-            ('<br>', 7),
+            ('<input', 8),
+            ('<br>', 8),
             ('</body>', 1),
             ('</html>', 1),
         )
@@ -224,7 +224,7 @@ class ListarPost_OneBook_Test(TestCase):
             ('Biblioteca', 2),
             ('<input', 1),
             ('Contos de Machado de Assis', 1),
-            ('<br>', 10),
+            ('<br>', 12),
             ('</body>', 1),
             ('</html>', 1),
         )
@@ -293,10 +293,10 @@ def test_form_min_character_length(self):
 
     for data in test_cases:
         form = LivroForm(data)
-        field_name = data['campo']  # Recebe o campo que deve ser analisado se está com menos de 10 caracteres
+        field_name = data['campo'] 
         with self.subTest(field_name=field_name):
             self.assertIn(field_name, form.errors)
             self.assertEqual(
-                form.errors[field_name][0], 'Deve ter pelo menos dez caracteres'  # Correção aqui
+                form.errors[field_name][0], 'Deve ter pelo menos três caracteres' 
             )
 

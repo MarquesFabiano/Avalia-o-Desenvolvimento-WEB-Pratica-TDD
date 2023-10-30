@@ -4,8 +4,8 @@ from core.models import LivroModel
 
 
 def validate_title(value):
-    if len(value) < 10:
-        raise ValidationError('Deve ter pelo menos dez caracteres')
+    if len(value) < 3:
+        raise ValidationError('Deve ter pelo menos três caracteres')
 
 def validate_ano(ano):
     if not ano.isdigit():
