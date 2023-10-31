@@ -25,8 +25,9 @@ def validate_numDePaginas(numDePaginas):
     if not numDePaginas.isdigit():
         raise ValidationError('O número de páginas deve conter apenas dígitos.')
     
-    if len(numDePaginas) <=3:
+    if len(numDePaginas) > 3:
         raise ValidationError('O número de páginas deve conter até 3 dígitos.')
+
 
 class LivroForm(forms.ModelForm):
 

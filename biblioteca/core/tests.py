@@ -241,7 +241,7 @@ class LivroModelModelTest(TestCase):
             autor = 'Machamdo de Assis',
             ano = '1997',
             isbn = '012345678912',
-            numDepaginas = '123')
+            numDePaginas = '123')
         self.livro.save()
 
     def test_created(self):
@@ -251,7 +251,7 @@ class LivroModelModelTest(TestCase):
 class LivroFormTest(TestCase):
     def test_fields_in_form(self):
         form = LivroForm()
-        expected = ['titulo', 'editora','autor', 'ano', 'isbn']
+        expected = ['titulo', 'editora','autor', 'ano', 'isbn', 'numDePaginas']
         self.assertSequenceEqual(expected, list(form.fields))
     
     def test_form_all_OK(self):
@@ -260,7 +260,8 @@ class LivroFormTest(TestCase):
             editora='Editora Brasil',
             autor='Machado de Assis',
             ano='1997',
-            isbn='012345678912'  # Fornecendo um ISBN válido de 13 dígitos
+            isbn='012345678912',
+            numDePaginas='233'
         )
         form = LivroForm(dados)
         errors = form.errors
