@@ -3,6 +3,9 @@ from django.shortcuts import resolve_url as r
 from http import HTTPStatus
 from .models import LivroModel
 from .forms import LivroForm
+from django.core.exceptions import ValidationError
+
+
 
 
 class IndexGetTest(TestCase):
@@ -291,21 +294,42 @@ class LivroFormTest(TestCase):
         self.assertEqual(form.errors['isbn'],['Informe o ISBN do livro'])
         self.assertEqual(form.errors ['paginas'], ['Informe o número de páginas do livro'])
 
+    def test_form_less_than_3_character_editora(self):
+        dados = dict(editora='13')
+        form = LivroForm(dados)
+        errors = form.errors
+        errors_list = errors['editora']
+        msg = 'A editora deve ter pelo menos três caracteres'
+        self.assertEqual([msg], errors_list)
 
-    
-def test_form_min_character_length(self):
-    test_cases = [
-        {'titulo': '123', 'editora': 'Editora Brasil', 'campo': 'titulo'},
-        {'titulo': 'Contos do Machado de Assis', 'editora': '123', 'campo': 'editora'},
-        {'titulo': 'Contos do Machado de Assis', 'editora': 'Editora', 'autor': 'Machado', 'campo': 'autor'}
-    ]
+    def test_form_less_than_3_character_titulo(self):
+        dados = dict(titulo='ab')
+        form = LivroForm(dados)
+        errors = form.errors
+        errors_list = errors['titulo']
+        msg = 'O título ter pelo menos três caracteres'
+        self.assertEqual([msg], errors_list)
 
-    for data in test_cases:
-        form = LivroForm(data)
-        field_name = data['campo']  
-        with self.subTest(field_name=field_name):
-            self.assertIn(field_name, form.errors)
-            self.assertEqual(
-                form.errors[field_name][0], 'Deve ter pelo menos dez caracteres'  
-            )
+    def test_form_ano_isnotdigit(self):
+        dados = dict(ano='abpb')
+        form = LivroForm(dados)
+        errors = form.errors
+        errors_list = errors['ano']
+        msg = 'O ano deve conter apenas dígitos.'
+        self.assertEqual([msg], errors_list)
 
+    def test_form_different_than_4_character_ano(self):
+        dados = dict(ano='123')
+        form = LivroForm(dados)
+        errors = form.errors
+        errors_list = errors['ano']
+        msg = 'O ano deve ter exatamente 4 dígitos.'
+        self.assertEqual([msg], errors_list)
+
+    def test_form_isbn_isnotdigit(self):
+        dados = dict(isbn='temtrezeletra')
+        form = LivroForm(dados)
+        errors = form.errors
+        errors_list = errors['isbn']
+        msg = 'O ISBN deve conter apenas dígitos.'
+        self.assertEqual([msg], errors_list) 

@@ -3,9 +3,13 @@ from django.core.exceptions import ValidationError
 from core.models import LivroModel
 
 
-def validate_title(value):
-    if len(value) < 10:
-        raise ValidationError('Deve ter pelo menos dez caracteres')
+def validate_title(titulo):
+    if len(titulo) < 3:
+        raise ValidationError('O título ter pelo menos três caracteres')
+
+def validate_editora(editora):
+    if len(editora) < 3:
+        raise ValidationError('A editora deve ter pelo menos três caracteres')
 
 def validate_ano(ano):
     if not ano.isdigit():
@@ -20,8 +24,17 @@ def validate_isbn(isbn):
     
     if len(isbn) != 13:
         raise ValidationError('O ISBN deve conter 13 dígitos.')
+    
+def validate_paginas(paginas):
+    if not paginas.isdgit():
+        raise ValidationError('O número de páginas deve conter apenas dígitos.')
+    
+    if len(paginas) > 3:
+        raise ValidationError('O número de páginas deve conter no máximo três dígitos.')
 
-
+def validate_autor(autor):
+    if len(autor) < 10:
+        raise ValidationError('O nome do autor deve ter no minimo dez digitos')
 
 class LivroForm(forms.ModelForm):
 
@@ -56,12 +69,12 @@ class LivroForm(forms.ModelForm):
 
     def clean_editora(self):
         editora = self.cleaned_data['editora']
-        validate_title(editora)
+        validate_editora(editora)
         return editora
 
     def clean_autor(self):
         autor =self.cleaned_data['autor']
-        validate_title(autor)
+        validate_autor(autor)
         return autor
     
     def clean_ano(self):
@@ -72,7 +85,12 @@ class LivroForm(forms.ModelForm):
     def clean_isbn(self):
         isbn = self.cleaned_data['isbn']
         validate_isbn(isbn)
-        return isbn    
+        return isbn
+
+    def clear_paginas(self):
+        paginas =self.cleaned_data['paginas']
+        validate_paginas(paginas)
+        return paginas    
 
     def clean(self):
         self.cleaned_data = super().clean()
