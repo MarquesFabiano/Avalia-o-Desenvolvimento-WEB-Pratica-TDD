@@ -58,8 +58,8 @@ class CadastroGetTest(TestCase):
             ('<html', 1),
             ('<body>', 1),
             ('Biblioteca', 2),
-            ('<input', 8),
-            ('<br>', 8),
+            ('<input', 7),
+            ('<br>', 7),
             ('</body>', 1),
             ('</html>', 1),
         )
@@ -74,7 +74,8 @@ class CadastroPostOk(TestCase):
                 'editora': 'editora Brasil',
                 'autor': 'Machado de Assis',
                 'ano': 1997,
-                'isbn': '0123456789012'}
+                'isbn': '0123456789012',
+                'paginas': '123'}
         self.resp = self.client.post(r('core:cadastro'), data, follow=True)
         self.resp2 = self.client.post(r('core:cadastro'), data)
 
@@ -224,7 +225,7 @@ class ListarPost_OneBook_Test(TestCase):
             ('Biblioteca', 2),
             ('<input', 1),
             ('Contos de Machado de Assis', 1),
-            ('<br>', 12),
+            ('<br>', 10),
             ('</body>', 1),
             ('</html>', 1),
         )
@@ -241,7 +242,7 @@ class LivroModelModelTest(TestCase):
             autor = 'Machamdo de Assis',
             ano = '1997',
             isbn = '012345678912',
-            numDePaginas = '123')
+            paginas = '123')
         self.livro.save()
 
     def test_created(self):
@@ -251,7 +252,7 @@ class LivroModelModelTest(TestCase):
 class LivroFormTest(TestCase):
     def test_fields_in_form(self):
         form = LivroForm()
-        expected = ['titulo', 'editora','autor', 'ano', 'isbn', 'numDePaginas']
+        expected = ['titulo', 'editora','autor', 'ano', 'isbn', 'paginas']
         self.assertSequenceEqual(expected, list(form.fields))
     
     def test_form_all_OK(self):
@@ -260,8 +261,7 @@ class LivroFormTest(TestCase):
             editora='Editora Brasil',
             autor='Machado de Assis',
             ano='1997',
-            isbn='012345678912',
-            numDePaginas='233'
+            isbn='012345678912'  # Fornecendo um ISBN válido de 13 dígitos
         )
         form = LivroForm(dados)
         errors = form.errors
@@ -274,7 +274,8 @@ class LivroFormTest(TestCase):
             'editora': '',
             'autor': '',
             'ano':'',
-            'isbn': '',  
+            'isbn': '',
+            'paginas': '',  
         }
         form = LivroForm(data)
         self.assertFalse(form.is_valid())
@@ -283,6 +284,7 @@ class LivroFormTest(TestCase):
         self.assertEqual(form.errors['autor'], ["Informe o autor do livro."])
         self.assertEqual(form.errors['ano'],['Informe o ano do livro'])
         self.assertEqual(form.errors['isbn'],['Informe o ISBN do livro'])
+        self.assertEqual(form.errors ['paginas'], ['Informe o número de páginas do livro'])
 
 
     
@@ -295,10 +297,10 @@ def test_form_min_character_length(self):
 
     for data in test_cases:
         form = LivroForm(data)
-        field_name = data['campo'] 
+        field_name = data['campo']  # Recebe o campo que deve ser analisado se está com menos de 10 caracteres
         with self.subTest(field_name=field_name):
             self.assertIn(field_name, form.errors)
             self.assertEqual(
-                form.errors[field_name][0], 'Deve ter pelo menos três caracteres' 
+                form.errors[field_name][0], 'Deve ter pelo menos dez caracteres'  # Correção aqui
             )
 
