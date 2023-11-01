@@ -58,8 +58,8 @@ class CadastroGetTest(TestCase):
             ('<html', 1),
             ('<body>', 1),
             ('Biblioteca', 2),
-            ('<input', 7),
-            ('<br>', 7),
+            ('<input', 9),
+            ('<br>', 9),
             ('</body>', 1),
             ('</html>', 1),
         )
@@ -207,7 +207,11 @@ class ListarPost_OneBook_Test(TestCase):
     def setUp(self):
         self.livro = LivroModel(
             titulo='Contos de Machado de Assis',
-            editora='editora Brasil',)
+            editora='editora Brasil',
+            autor = 'Machamdo de Assis',
+            ano = '1997',
+            isbn = '012345678912',
+            paginas = '123')
         self.livro.save()
         data = {'livro_id': self.livro.pk}
         self.resp = self.client.post(r('core:listar'), data)
@@ -225,7 +229,7 @@ class ListarPost_OneBook_Test(TestCase):
             ('Biblioteca', 2),
             ('<input', 1),
             ('Contos de Machado de Assis', 1),
-            ('<br>', 10),
+            ('<br>', 14),
             ('</body>', 1),
             ('</html>', 1),
         )
@@ -261,7 +265,8 @@ class LivroFormTest(TestCase):
             editora='Editora Brasil',
             autor='Machado de Assis',
             ano='1997',
-            isbn='012345678912'  # Fornecendo um ISBN válido de 13 dígitos
+            isbn='012345678912',
+            paginas = '123'
         )
         form = LivroForm(dados)
         errors = form.errors
@@ -297,10 +302,10 @@ def test_form_min_character_length(self):
 
     for data in test_cases:
         form = LivroForm(data)
-        field_name = data['campo']  # Recebe o campo que deve ser analisado se está com menos de 10 caracteres
+        field_name = data['campo']  
         with self.subTest(field_name=field_name):
             self.assertIn(field_name, form.errors)
             self.assertEqual(
-                form.errors[field_name][0], 'Deve ter pelo menos dez caracteres'  # Correção aqui
+                form.errors[field_name][0], 'Deve ter pelo menos dez caracteres'  
             )
 
