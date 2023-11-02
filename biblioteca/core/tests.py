@@ -317,6 +317,14 @@ class LivroFormTest(TestCase):
         errors_list = errors['ano']
         msg = 'O ano deve conter apenas dígitos.'
         self.assertEqual([msg], errors_list)
+    
+    def test_form_pages_isnotdigit(self):
+        dados = dict(paginas='acsd')
+        form = LivroForm(dados)
+        errors = form.errors
+        errors_list = errors['paginas']
+        msg = 'O número de páginas deve conter apenas dígitos.'
+        self.assertEqual([msg], errors_list) 
 
     def test_form_different_than_4_character_ano(self):
         dados = dict(ano='123')
@@ -333,3 +341,20 @@ class LivroFormTest(TestCase):
         errors_list = errors['isbn']
         msg = 'O ISBN deve conter apenas dígitos.'
         self.assertEqual([msg], errors_list) 
+
+    def test_form_more_than_3_character_paginas(self):
+        dados = dict(paginas='1235')
+        form = LivroForm(dados)
+        errors = form.errors
+        errors_list = errors['paginas']
+        msg = 'O número de páginas deve conter no máximo três dígitos.'
+        self.assertEqual([msg], errors_list)
+
+    def test_form_less_then_10_character_autor(self):
+        dados = dict(autor ='Fabiano')
+        form = LivroForm(dados)
+        errors = form.errors
+        errors_list = errors['autor']
+        msg = 'O nome do autor deve ter no minimo dez digitos'
+        self.assertEqual([msg], errors_list)
+                             

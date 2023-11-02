@@ -26,7 +26,7 @@ def validate_isbn(isbn):
         raise ValidationError('O ISBN deve conter 13 dígitos.')
     
 def validate_paginas(paginas):
-    if not paginas.isdgit():
+    if not paginas.isdigit():
         raise ValidationError('O número de páginas deve conter apenas dígitos.')
     
     if len(paginas) > 3:
@@ -87,11 +87,11 @@ class LivroForm(forms.ModelForm):
         validate_isbn(isbn)
         return isbn
 
-    def clear_paginas(self):
-        paginas =self.cleaned_data['paginas']
+    def clean_paginas(self):
+        paginas = self.cleaned_data['paginas']
         validate_paginas(paginas)
-        return paginas    
-
+        return paginas
+    
     def clean(self):
         self.cleaned_data = super().clean()
         return self.cleaned_data
