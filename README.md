@@ -1,6 +1,6 @@
 # Prática TDD
 
-Desafio técnico para os alunos da disciplina "Desenvolvimento Web 3" e "Qualidade e Teste de Software"
+Desafio técnico para os alunos da disciplina "Desenvolvimento Web 3" e "Qualidade e Teste de Software" Realizado pelo professor Mestre [Orlando Saraiva](https://github.com/orlandosaraivajr), segunda Sprint realizada por [Fabiano Marques] (https://github.com/MarquesFabiano/)
 
 
 [O que eu devo fazer ?](https://youtu.be/ywayPV7Y648)
@@ -8,7 +8,7 @@ Desafio técnico para os alunos da disciplina "Desenvolvimento Web 3" e "Qualida
 No ambiente Linux:
 
 ```console
-git clone https://github.com/orlandosaraivajr/Pratica_TDD_1.git
+git clone https://github.com/MarquesFabiano/Projeto-Biblioteca-com-django---pratica-TDD.git
 cd Pratica_TDD_1/
 virtualenv -p python3 venv
 source venv/bin/activate
@@ -24,7 +24,7 @@ python manage.py runserver
 No ambiente Windows:
 
 ```console
-git clone https://github.com/orlandosaraivajr/Pratica_TDD_1.git
+git clone https://github.com/MarquesFabiano/Projeto-Biblioteca-com-django---pratica-TDD.git
 cd Pratica_TDD_1/
 virtualenv venv
 cd venv
@@ -99,4 +99,24 @@ O código fonte passará por atualizações para acomodar estes novos requisitos
 
 Você recebeu a sprint 1 com uma cobertura de teste acima de 90%.
 
+
 <img src="img/cobertura_testes.png">
+
+#### Resultados da Segunda Sprint
+
+Todos os requisitos foram cumpridos!
+
+Tela de cadastro com todos os novos campos:
+<img src="img/cadastro_sprint2">
+
+Erros requisitados na tela de cadastro:
+<img src="img/erros_cadastro_sprint2">
+
+Tela listando livro com todos os novos campos:
+<img src="img/rota_listar_sprint2">
+
+Cobertura de erros em 97%:
+<img src="img/cobertura_testes_sprint2">
+
+Todos os testes passando:
+<img src="img/testes_passando_sprint2">
