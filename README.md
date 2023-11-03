@@ -107,16 +107,16 @@ Você recebeu a sprint 1 com uma cobertura de teste acima de 90%.
 Todos os requisitos foram cumpridos!
 
 Tela de cadastro com todos os novos campos:
-<img src="img/cadastro_sprint2">
+<img src="img/cadastro_sprint2.png">
 
 Erros requisitados na tela de cadastro:
-<img src="img/erros_cadastro_sprint2">
+<img src="img/erros_cadastro_sprint2.png">
 
 Tela listando livro com todos os novos campos:
-<img src="img/rota_listar_sprint2">
+<img src="img/rota_listar_sprint2.png">
 
 Cobertura de erros em 97%:
-<img src="img/cobertura_testes_sprint2">
+<img src="img/cobertura_testes_sprint2.png">
 
 Todos os testes passando:
-<img src="img/testes_passando_sprint2">
+<img src="img/testes_passando_sprint2.png">
