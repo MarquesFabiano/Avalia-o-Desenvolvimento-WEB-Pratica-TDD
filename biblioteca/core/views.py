@@ -58,3 +58,29 @@ def listar(request):
         livros = LivroModel.objects.all()
         contexto = {'livros': livros}
         return render(request, 'listar.html', contexto)
+
+
+
+def atualizar(request, livro_id):
+    livro = LivroModel.objects.get(pk=livro_id)
+
+    if request.method == 'POST':
+        form = LivroForm(request.POST, instance=livro)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('core:listar'))
+    else:
+        form = LivroForm(instance=livro)
+
+    contexto = {'form': form, 'livro_id': livro_id}
+    return render(request, 'atualizar.html', contexto)
+
+def excluir(request, livro_id):
+    livro = LivroModel.objects.get(pk=livro_id)
+
+    if request.method == 'POST':
+        livro.delete()
+        return HttpResponseRedirect(reverse('core:listar'))
+
+    contexto = {'livro': livro}
+    return render(request, 'excluir.html', contexto)

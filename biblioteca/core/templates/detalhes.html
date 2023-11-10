@@ -49,6 +49,31 @@
                 <input type="submit" value="Voltar"/>              
             </form>
         </center>
+
+        <center>
+            {% if livro %}
+                <form action="{% url 'core:atualizar' livro_id=livro.id %}" method="GET">
+                    <button class="buttonAtualiza"type="submit">Atualizar Livro</button>
+                </form>
+            {% endif %}
+        </center>
+
+        <center>
+            {% if livro %}
+            <form id="formExcluir" method="post" action="{% url 'core:excluir' livro_id=livro.id %}" style="display: inline;">
+                {% csrf_token %}
+                <button class="buttonExcluir" type="button" onclick="avisoExclusao()">Excluir Livro</button>
+            </form>
+        
+            <script>
+                function avisoExclusao() {
+                    if (confirm('Você tem certeza que deseja excluir o livro "{{ livro.titulo }}"?')) {
+                        document.getElementById('formExcluir').submit();
+                    }
+                }
+            </script>
+        {% endif %}
+        </center>
     </body>
 
 </html>
