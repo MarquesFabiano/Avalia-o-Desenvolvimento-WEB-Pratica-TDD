@@ -1,0 +1,23 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static '/css/style.css' %}">
+    <title>Atualize seu livro</title>
+</head>
+<body>
+    {% block content %}
+        <h2>Atualizar Livro</h2>
+            <form method="post" action="{% url 'core:atualizar' livro_id=livro_id %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Atualizar Livro</button>
+            </form>
+        <a href="{% url 'core:listar' %}">Voltar para a lista de livros!</a>
+    {% endblock %}
+
+</body>
+</html>
