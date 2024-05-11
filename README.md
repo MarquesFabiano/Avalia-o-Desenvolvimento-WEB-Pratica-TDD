@@ -1,128 +1,67 @@
-# Prática TDD
+# Projeto_Interdisciplinar_3sm_Fatec
 
-Desafio técnico para os alunos da disciplina "Desenvolvimento Web 3" e "Qualidade e Teste de Software" Realizado pelo professor Mestre [Orlando Saraiva](https://github.com/orlandosaraivajr), segunda Sprint realizada por [Fabiano Marques] (https://github.com/MarquesFabiano/)
+## Projeto destinado às atualizações do Projeto Interdisciplinar.
 
+<p>Membros: </p> <br>
 
-[O que eu devo fazer ?](https://youtu.be/ywayPV7Y648)
+<ul>
+  <li>
+    Fabiano Marques Soares Junior
+  </li>
+  <li>
+    Fernando
+  </li>
+  <li>
+    Igor Natan Silva Ferreira
+  </li>
+  <li>
+    Giovani Ruzzon de Jesus Ortega
+  </li>
+  <li>
+    Guilherme Augusto da Silva Afonso
+  </li>
+</ul>
 
-No ambiente Linux:
+## Tema: Gestão inteligente de alimentos e Fome Zero
 
-```console
-git clone https://github.com/MarquesFabiano/Projeto-Biblioteca-com-django---pratica-TDD.git
-cd Pratica_TDD_1/
-virtualenv -p python3 venv
+<h1>Requisitos para rodar o Projeto:</h1>
+
+**Configuração do Ambiente (Windows):**
+
+```bash
+git clone https://github.com/ParaQueNome/Projeto_Interdisciplinar_3sm_Fatec.git
+cd PI3
+python -m venv venv
+venv\Scripts\activate.bat
+cd..
+cd..
+cd PI3
+pip install -r requeriments.txt
+# Inicie o MongoDB (certifique-se de ter o MongoDB instalado)
+# Você deve usar o MongoDB Compass para conectar-se ao localhost.
+# Utilize o nome 'FoodShare' na criação do banco de dados e na coleção
+# Aplicando migrações, executando testes e iniciando o servidor
+python manage.py migrate
+python manage.py test
+python manage.py runserver
+```
+---
+**Configuração do Ambiente (Linux):**
+```bash
+git clone https://github.com/ParaQueNome/Projeto_Interdisciplinar_3sm_Fatec.git
+cd PI3
+python -m venv venv
 source venv/bin/activate
-pip install -r requirements.txt
-cd biblioteca/
+cd ..
+cd ..
+cd PI3
+pip install -r requeriments.txt
+# Inicie o MongoDB (certifique-se de ter o MongoDB instalado)
+# Você deve usar o MongoDB Compass para conectar-se ao localhost.
+# Utilize o nome 'FoodShare' na criação do banco de dados e na coleção
+# Aplicando migrações, executando testes e iniciando o servidor
 python manage.py migrate
 python manage.py test
-coverage run --source='.' manage.py test 
-coverage html
 python manage.py runserver
 ```
 
-No ambiente Windows:
-
-```console
-git clone https://github.com/MarquesFabiano/Projeto-Biblioteca-com-django---pratica-TDD.git
-cd Pratica_TDD_1/
-virtualenv venv
-cd venv
-cd scripts
-activate.bat
-cd ..
-cd ..
-pip install -r requirements.txt
-cd biblioteca/
-python manage.py migrate
-python manage.py test
-coverage run --source='.' manage.py test 
-coverage html
-python manage.py runserver
-
-```
-
-### Requisitos da Sprint 1
-
-O projeto apresenta um cadastro de livros. Na rota raiz (/), se apresenta dois botões, conforme imagem abaixo:
-<img src="img/rota_raiz.png">
-
-Ao acessar a rota cadastro (/cadastro), é possível cadastrar o livro, que armazena as seguintes informações:
-
-- Título
-- Editora
-
-<img src="img/rota_cadastro.png">
-
-Ao acessar a rota listar (/listar), é possível verificar os livros cadastrados:
-
-<img src="img/rota_listar.png">
-
-Todos os testes unitários estão passando, e o sistema funciona como previsto para a primeira sprint.
-
-<img src="img/testes_passando.png">
-
-### Requisitos para a Sprint 2
-
-Aqui começa seu desafio. Você deve implementar as seguintes melhorias:
-
-#### Novos campos
-O cliente deseja armazenar os novos campos referente a livros:
-
-+ Autor
-+ ISBN
-+ Número de Páginas
-+ Ano em que a obra foi escrita
-
-#### Validação dos campos
-
-O cliente deseja validar os campos com as seguintes regras:
-
-+ Título:  Validar a string para cadastro com pelo menos 3 caracteres. Atualmente, espera-se ter pelo menos 10 caracteres.
-
-+ Editora: Validar a string para cadastro com pelo menos 3 caracteres.
-Atualmente, espera-se ter pelo menos 10 caracteres.
-
-+ Autor: Validar a string para cadastro com pelo menos 10 caracteres.
-
-+ ISBN: Validar a string para cadastro com exatos 13 caracteres e todos numéricos.
-
-+ Número de Páginas: Validar a string para cadastro entre 1 e 3 caracteres e todos numéricos.
-
-+ Ano: : Validar a string para cadastro com exatos 4 caracteres e todos numéricos. 
-
-Além disso, na sprint 1, os campos Título e editora são obrigatórios. Nesta sprint, os novos campos serão obrigatórios também.
-
-#### Ajustes nos testes
-
-O código fonte passará por atualizações para acomodar estes novos requisitos. Com isso, você deve ajudar os testes existentes e, caso julgue pertinente, criar novos testes.
-
-Você recebeu a sprint 1 com uma cobertura de teste acima de 90%.
-
-
-<img src="img/cobertura_testes.png">
-
-#### Resultados da Segunda Sprint
-
-Todos os requisitos foram cumpridos!
-
-Tela de cadastro com todos os novos campos:
-
-<img src="img/cadastro_sprint2.png">
-
-Erros requisitados na tela de cadastro:
-
-<img src="img/erros_cadastro_sprint2.png">
-
-Tela listando livro com todos os novos campos:
-
-<img src="img/rota_listar_sprint2.png">
-
-Cobertura de erros em 97%:
-
-
-<img src="img/cobertura_testes_sprint2.png">
-
-
-Todos os testes passando:
-<img src="img/testes_passando_sprint2.png">
